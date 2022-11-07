@@ -15,3 +15,20 @@ $$
 N*Poy < Nkx*Nky*Nif
 $$
 Then there can be N serializations.
+
+## IO
+
+```verilog
+module Serializer #(
+    parameter Pox = 3,
+    parameter Poy = 3,
+    parameter MUX_Channel = 2
+) (
+    input clk,
+    input rst,
+    input [Poy-1:0][Pox-1:0][15:0] mac_output,
+    input mac_output_valid,
+    output reg [15:0] serializer_out,
+    output reg serializer_out_valid
+);
+```
