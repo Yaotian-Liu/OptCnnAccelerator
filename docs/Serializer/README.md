@@ -20,15 +20,14 @@ Then there can be N serializations.
 
 ```verilog
 module Serializer #(
-    parameter Pox = 3,
-    parameter Poy = 3,
-    parameter MUX_Channel = 2
+  parameter POX = 3,
+  parameter POY = 3
 ) (
-    input clk,
-    input rst,
-    input [Poy-1:0][Pox-1:0][15:0] mac_output,
-    input mac_output_valid,
-    output reg [15:0] serializer_out,
-    output reg serializer_out_valid
+  input                               clk                  ,
+  input                               rst                  ,
+  input      [POY-1:0][POX-1:0][15:0] mac_output           ,
+  input                               mac_output_valid     ,
+  input                               serializer_out_signal, // when chosen by MUX
+  output reg [POX-1:0][   15:0]       serializer_out
 );
 ```
