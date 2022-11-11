@@ -69,7 +69,7 @@ def generate_json_bin_param(dtype="Q4.12"):
 
 
 def generate_test_bin_data(dtype="Q4.12"):
-    test_data = np.array(torch.load("test_data")).reshape(28, 28)
+    test_data = np.load("test_data.npy")
     shape = test_data.shape
 
     new_data_bin = []
