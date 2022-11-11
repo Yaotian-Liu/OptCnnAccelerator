@@ -1,7 +1,7 @@
 module Post_top #(
   parameter INT_BITS  = 4, // Q{INT_IBTS}.{16-INT_BITS}
-  parameter POX       = 3,
-  parameter POY       = 3,
+  parameter POX       = 4,
+  parameter POY       = 4,
   parameter CHANNEL_N = 2  // The number of connected channels.
 ) (
   input                             clk              ,
@@ -14,7 +14,9 @@ module Post_top #(
   output [              POX*16-1:0] relu_out         , // result of CONV+ReLU
   output                            relu_out_valid   ,
   output [              POX*16-1:0] post_out         , // result of CONV+ReLU+BN
-  output                            post_out_valid
+  output                            post_out_valid   ,
+  output [            POX/2*16-1:0] pooling_out      , // result of Pooling
+  output                            pooling_out_valid
 );
 
   wire [CHANNEL_N*POX*16-1:0] all_serializer_out;
@@ -73,6 +75,15 @@ module Post_top #(
     .relu_out_valid       (relu_out_valid       ),
     .post_out             (post_out             ),
     .post_out_valid       (post_out_valid       )
+  );
+
+  Pooling #(.POX(POX)) U_Pooling (
+    .clk              (clk              ),
+    .rst              (rst              ),
+    .post_to_pooling  (post_out         ),
+    .post_out_valid   (post_out_valid   ),
+    .pooling_out      (pooling_out      ),
+    .pooling_out_valid(pooling_out_valid)
   );
 
 endmodule
