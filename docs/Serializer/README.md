@@ -23,11 +23,11 @@ module Serializer #(
   parameter POX = 3,
   parameter POY = 3
 ) (
-  input                               clk                  ,
-  input                               rst                  ,
-  input      [POY-1:0][POX-1:0][15:0] mac_output           ,
-  input                               mac_output_valid     ,
-  input                               serializer_out_signal, // when chosen by MUX
-  output reg [POX-1:0][   15:0]       serializer_out
+  input                       clk             ,
+  input                       rst             ,
+  input      [POY*POX*16-1:0] mac_output      ,
+  input                       mac_output_valid,
+  input                       mux_sel         ,
+  output reg [    POX*16-1:0] serializer_out
 );
 ```
