@@ -1,19 +1,19 @@
 module Post_top #(
-  parameter INT_BITS  = 4,
+  parameter INT_BITS  = 4, // Q{INT_IBTS}.{16-INT_BITS}
   parameter POX       = 3,
   parameter POY       = 3,
-  parameter CHANNEL_N = 2
+  parameter CHANNEL_N = 2  // The number of connected channels.
 ) (
   input                             clk             ,
   input                             rst             ,
-  input  [CHANNEL_N*POY*POX*16-1:0] mac_to_serialzer,
-  input                             mac_output_valid,
-  input  [              POX*16-1:0] K               ,
-  input  [              POX*16-1:0] B               ,
-  input  [              POX*16-1:0] bias            ,
-  output [              POX*16-1:0] relu_out        ,
+  input  [CHANNEL_N*POY*POX*16-1:0] mac_to_serialzer, // data from MAC
+  input                             mac_output_valid, // data valid signal from MAC
+  input  [                    15:0] K               , // K for BN
+  input  [                    15:0] B               , // B for BN
+  input  [              POX*16-1:0] bias            , // bias for CONV
+  output [              POX*16-1:0] relu_out        , // result of CONV+ReLU
   output                            relu_out_valid  ,
-  output [              POX*16-1:0] post_out        ,
+  output [              POX*16-1:0] post_out        , // result of CONV+ReLU+BN
   output                            post_out_valid
 );
 
