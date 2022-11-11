@@ -4,16 +4,16 @@ module Post_top #(
   parameter POY       = 3,
   parameter CHANNEL_N = 2  // The number of connected channels.
 ) (
-  input                             clk             ,
-  input                             rst             ,
-  input  [CHANNEL_N*POY*POX*16-1:0] mac_to_serialzer, // data from MAC
-  input                             mac_output_valid, // data valid signal from MAC
-  input  [                    15:0] K               , // K for BN
-  input  [                    15:0] B               , // B for BN
-  input  [              POX*16-1:0] bias            , // bias for CONV
-  output [              POX*16-1:0] relu_out        , // result of CONV+ReLU
-  output                            relu_out_valid  ,
-  output [              POX*16-1:0] post_out        , // result of CONV+ReLU+BN
+  input                             clk              ,
+  input                             rst              ,
+  input  [CHANNEL_N*POY*POX*16-1:0] mac_to_serializer, // data from MAC
+  input                             mac_output_valid , // data valid signal from MAC
+  input  [                    15:0] K                , // K for BN
+  input  [                    15:0] B                , // B for BN
+  input  [              POX*16-1:0] bias             , // bias for CONV
+  output [              POX*16-1:0] relu_out         , // result of CONV+ReLU
+  output                            relu_out_valid   ,
+  output [              POX*16-1:0] post_out         , // result of CONV+ReLU+BN
   output                            post_out_valid
 );
 
@@ -48,12 +48,12 @@ module Post_top #(
         .POX(POX),
         .POY(POY)
       ) U_Serializer (
-        .clk             (clk                                              ),
-        .rst             (rst                                              ),
-        .mac_output      (mac_to_serialzer[(c+1)*POY*POX*16-1:c*POY*POX*16]),
-        .mac_output_valid(mac_output_valid                                 ),
-        .mux_sel         (mux_sel                                          ),
-        .serializer_out  (all_serializer_out[(c+1)*POX*16-1:c*POX*16]      )
+        .clk             (clk                                               ),
+        .rst             (rst                                               ),
+        .mac_output      (mac_to_serializer[(c+1)*POY*POX*16-1:c*POY*POX*16]),
+        .mac_output_valid(mac_output_valid                                  ),
+        .mux_sel         (mux_sel                                           ),
+        .serializer_out  (all_serializer_out[(c+1)*POX*16-1:c*POX*16]       )
       );
     end
   endgenerate
