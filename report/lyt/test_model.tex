@@ -1,0 +1,12 @@
+\subsection{Test Model}
+
+To simplify our verification, we only use a rather small CNN model on MNIST dataset. This CNN model is based on the classical LeNet-5 with BN but without implicit linear layer. The model can achieve a 98\% Acc. easily.
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\columnwidth]{../figures/net.png}
+    \caption{Out test model}
+    \label{fig:net}
+\end{figure}
+
+After each convolution layer, we apply a ReLU and BN.

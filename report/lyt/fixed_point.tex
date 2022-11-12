@@ -1,0 +1,16 @@
+\subsection{Fixed Point}
+
+Another major issue we encounter is fixed point. As the paper says, the proposed architecture uses 16-bit fixed point precision pixels and weights.
+
+At first, we suppose the fixed-point multiplication should not be a big problem. With a little deeper thought, we realize the condition of its overflow could be really tricky. After trying classical fixed-point multiplication algorithm such as Booth, we still find it difficult to determine the overflow. One path to this is check whether the upper bits contains valid information, that is to say, all 0 for positive numbers or all 1 for negatives. At last, we turn to a third party fixed point multiplier with overflow detection to solve this issue.
+
+How to choose the right position of decimal point is also a problem. After we extract pixels and weights from our trained model, we find most parameters' absolute value is around 1e-3 to 1, but some, for instance, one of fused parameters in BN, is more than 500 due to the small variation. We guess the reason behind it might be ReLU, which eliminates all negatives, contributing to a smaller variation.
+
+Back to our topic, we have to choose a suitable fixed point setting. If we try to cover the bigger part, most pixels and weights around 1e-3 might suffer serious detriment, for the fact that 10 bits for decimal can only provide $2^{-10} \approx 10^{-3}$ precision. Even if we only use 4 bits for integer, there are only $16-1-4=11$ bits left for decimal, which is highly insufficient.
+
+During my lunch time, a walk to my take-out, an idea came to me. We can use a dynamic fixed point notation, with an extra $\log(\#bits)$ to indicate the position of decimal point for each fixed point number. The initial parameters for this extra indicator comes from software, say, the driver. The driver examines every weight and pixel and provides a suitable, custom setting of decimal point. For weights and pixels produced in the process, the dynamic decimal point is determined by both operants. In addition, the decimal point is inferred by the bigger one. In multiplication, the decimal point is inferred by the sum of these two.
+
+Even this process seems time and space consuming, but I believe, in this way, using less bits for fixed point numbers can maybe result much less accuracy degradation.
+
+Sad story, I do not have enough time to do more experiment on my dynamic fixed point design..
+
