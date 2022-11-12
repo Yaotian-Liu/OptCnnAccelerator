@@ -1,0 +1,13 @@
+\subsection{MUX}
+
+The MUX is a module, acting like a regular multiplexer but with a more developed function, providing a further serialization of the outputs from MAC. However, relevant introduction in the paper is far from accurate and detailed, and the figure is also a little deceptive.
+
+According to the paper, \textit{"Since Poy $<$ Nkx × Nky × Nif for all the layers, we serialize the Pox × Poy × Pof MAC outputs into Poy cycles."} But actually, if
+
+\begin{equation*}
+    N \times Poy < \mathrm{Min}(Nkx \times Nky \times Nif)
+\end{equation*}
+
+where Nkx, Nky, Nif are the shape of filters, then there can be a N times folded serialization.
+
+So in our final design, according to our design variables, where N can be equal to Pof, only one MUX is used to greatly save the use of following calculation units.

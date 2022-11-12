@@ -1,0 +1,38 @@
+\subsection{BN \& ReLU}
+
+According to the paper, ReLU is applied after batch normalization. This is also the original proposition of BN\cite{ioffeBatchNormalizationAccelerating2015}. However, in recent study, this may not be promising compared to applying ReLU before BN.
+
+This question is discussed in Adrian Rosebrock's \textit{Deep Learning for Computer Vision with Python}\cite{DeepLearningForCV}. In Adrian's view, using BN ahead of ReLU does not make sense.
+
+Under the original setting, a BN layer is normalizing the features coming out of a CONV layer, causing nearly half of the features to be negative due to normalization. Then these negative features will be clamped by a nonlinear activation such as ReLU under our design. That is to say, no matter what comes from CONV layer, even all of the outputs are positive, there are always nearly half of total features be clamped to zero.
+
+Instead, if we place the BN after ReLU, we normalize the positive features without statistically biasing them with features that would have otherwise not make it to the next CONV layer.
+
+What's more funny, according to François Chollet:
+
+\textit{"I can guarantee that recent code written by Christian [from the BN paper] applies ReLU before BN."}
+
+According to some posts online, they also find out using ReLU before BN can yield a better result.
+
+Of course, there are other opinions supporting using BN first. In this way, the parameters of CNN, like bias, can be merged into BN, resulting in a faster inference. But from my point of view, I prefer a better logic to "tricks" to speed up inference.
+
+Thus, in our reproduction, we apply ReLU before BN.
+
+\begin{equation*}
+    \begin{aligned}
+        x'                & = x + b                                                                                                                                           \\
+        x''               & = \gamma \cdot \frac {\mathrm{ReLU} (x') - \mathrm{E}[x]}{\sqrt{\mathrm{Var}[x]+\epsilon}}+\beta\,                                                \\
+        \Rightarrow
+        x''               & = \frac{\gamma}{\sqrt{\mathrm{Var}[x]+\epsilon}}\cdot \mathrm{ReLU}(x) + (\beta-\gamma\cdot\frac{\mathrm{E}[x]}{\sqrt{\mathrm{Var}[x]+\epsilon}}) \\
+        x''               & =K\cdot\mathrm{ReLU}(x) + B\,                                                                                                                     \\
+        \mathrm{where}\ K & =\frac{\gamma}{\sqrt{\mathrm{Var}[x]+\epsilon}},\
+        B=\beta-\gamma\cdot\frac{\mathrm{E}[x]}{\sqrt{\mathrm{Var}[x]+\epsilon}}
+    \end{aligned}
+\end{equation*}
+
+
+
+
+
+
+
