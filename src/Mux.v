@@ -1,12 +1,13 @@
 module Mux #(
   parameter CHANNEL_N = 2,
-  parameter POX       = 3,
-  parameter POY       = 3
+  parameter POX       = 4,
+  parameter POY       = 4
 ) (
   input                              clk               ,
   input                              rst               ,
   input      [ CHANNEL_N*POX*16-1:0] all_serializer_out,
   input                              mac_output_valid  ,
+  input      [      $clog2(POY)-1:0] mac_valid_number  ,
   output reg [$clog2(CHANNEL_N)-1:0] mux_sel           ,
   output reg [           POX*16-1:0] mux_out           ,
   output reg                         mux_out_valid
@@ -27,11 +28,11 @@ module Mux #(
   endgenerate
 
   assign mux_sel_next = mac_output_valid ? 1'b1 :
-    (transmit_cnt == POY - 1) ?
+    (transmit_cnt == mac_valid_number - 1) ?
     ((mux_sel == CHANNEL_N - 1) ?  1'b0 : mux_sel + 1'b1) : mux_sel;
 
   assign transmit_cnt_next = mac_output_valid ? transmit_cnt + 1'b1 :
-    (transmit_cnt == POY - 1) ?  1'b0 :
+    (transmit_cnt == mac_valid_number - 1) ?  1'b0 :
     (mux_sel > 0) ? transmit_cnt + 1'b1 : transmit_cnt;
 
   always @(posedge clk or posedge rst) begin

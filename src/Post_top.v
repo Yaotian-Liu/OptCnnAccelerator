@@ -8,6 +8,7 @@ module Post_top #(
   input                             rst              ,
   input  [CHANNEL_N*POY*POX*16-1:0] mac_to_serializer, // data from MAC
   input                             mac_output_valid , // data valid signal from MAC
+  input  [         $clog2(POY)-1:0] mac_valid_number , // indicate the actual mac block in use [1, POY]
   input  [                    15:0] K                , // K for BN
   input  [                    15:0] B                , // B for BN
   input  [              POX*16-1:0] bias             , // bias for CONV
@@ -36,6 +37,7 @@ module Post_top #(
     .rst               (rst                  ),
     .all_serializer_out(all_serializer_out   ),
     .mac_output_valid  (mac_output_valid     ),
+    .mac_valid_number  (mac_valid_number     ),
     .mux_sel           (mux_sel              ),
     .mux_out           (mux_postprocess_data ),
     .mux_out_valid     (mux_postprocess_valid)

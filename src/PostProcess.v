@@ -1,6 +1,6 @@
 module PostProcess #(
-  parameter POX      = 3,
-  parameter INT_BITS = 3
+  parameter POX      = 4,
+  parameter INT_BITS = 4
 ) (
   input                   clk                  ,
   input                   rst                  ,
@@ -30,9 +30,11 @@ module PostProcess #(
         (add_result[(pox+1)*16-1] == 1'b0) ? add_result[(pox+1)*16-1:pox*16] : 16'b0; // ReLU
 
       // Cycle 2
-      assign mul_results[(pox+1)*32-1:pox*32]   = relu_out[(pox+1)*16-1:pox*16] * K;
-      assign post_out_next[(pox+1)*16-1:pox*16] =
-        mul_results[(pox+1)*32-1-INT_BITS:pox*32+(16-INT_BITS)] + B;
+      Multiplier #(.INT_BITS(INT_BITS)) U_Multiplier (
+        .io_op1   (relu_out[(pox+1)*16-1:pox*16]     ),
+        .io_op2   (K                                 ),
+        .io_output(post_out_next[(pox+1)*16-1:pox*16])
+      );
     end
   endgenerate
 
@@ -46,7 +48,7 @@ module PostProcess #(
     end
     else begin
       relu_out <= relu_out_next;
-      post_out <= post_out_next;
+      post_out <= post_out_next + B;
 
       // Need 2 cycles to complete:
       // 1. Add bias + ReLU
