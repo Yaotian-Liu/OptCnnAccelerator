@@ -13,10 +13,10 @@ module Serializer #(
   reg [POY*POX*16-1:0] mac_output_reg     ;
   reg [POY*POX*16-1:0] mac_output_reg_next; // wire
 
-  wire [15:0] serializer_out_next;
+  wire [POX*16-1:0] serializer_out_next;
 
   // The first element of mac_output
-  assign serializer_out_next = mac_output_reg[0];
+  assign serializer_out_next = mac_output_reg[POX*16-1:0];
 
   always @(posedge clk or posedge rst) begin
     if (rst) begin
