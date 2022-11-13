@@ -10,13 +10,21 @@ module Pooling #(parameter POX = 4) (
   // Use to indicate the status of pooling operation
   // status == 0: processing the first two result
   // status == 1: processing the second two and ready to output
-  reg  status     ;
-  wire status_next;
-
-  assign status_next = post_out_valid ? status + 1'b1 : status;
+  reg status;
 
   wire [POX/2*16-1:0] compare_results;
   reg  [POX/2*16-1:0] pooling_reg    ;
+
+  always @(posedge clk or posedge rst) begin
+    if (rst) begin
+      status            <= 0;
+      pooling_out_valid <= 0;
+    end
+    else begin
+      status            <= post_out_valid ? status + 1'b1 : status;
+      pooling_out_valid <= status ? 1'b0 : 1'b1;
+    end
+  end
 
   genvar half_pox;
   generate
@@ -30,16 +38,14 @@ module Pooling #(parameter POX = 4) (
 
       always @(posedge clk or posedge rst) begin
         if (rst) begin
-          pooling_reg[half_pox] <= 0;
+          pooling_reg[(half_pox+1)*16-1:half_pox*16] <= 0;
           pooling_out[(half_pox+1)*16-1:half_pox*16] <= 0;
-          pooling_out_valid <= 0;
         end
         else if (post_out_valid) begin
           case (status)
             1'b0 : begin
               pooling_reg[(half_pox+1)*16-1:half_pox*16] <=
                 compare_results[(half_pox+1)*16-1:half_pox*16];
-              pooling_out_valid <= 0;
             end
 
             1'b1 : begin
@@ -48,7 +54,6 @@ module Pooling #(parameter POX = 4) (
                   pooling_reg[(half_pox+1)*16-1:half_pox*16] ?
                     compare_results[(half_pox+1)*16-1:half_pox*16]  :
                       pooling_reg[(half_pox+1)*16-1:half_pox*16];
-              pooling_out_valid <= 1;
             end
           endcase
         end
