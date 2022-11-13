@@ -8,7 +8,7 @@ DTYPE_LIST = [f"Q{n}.{16-n}" for n in range(1, 17)]
 
 
 def generate_json_bin_param(dtype="Q4.12"):
-    param = torch.load("params.pth")
+    param = torch.load("new_params.pth")
     new_param = dict()
 
     for k, v in param.items():
@@ -21,16 +21,16 @@ def generate_json_bin_param(dtype="Q4.12"):
 
     merge_lists = [
         [
-            "conv1.2.weight",
-            "conv1.2.bias",
-            "conv1.2.running_mean",
-            "conv1.2.running_var",
+            "bn1.weight",
+            "bn1.bias",
+            "bn1.running_mean",
+            "bn1.running_var",
         ],
         [
-            "conv2.2.weight",
-            "conv2.2.bias",
-            "conv2.2.running_mean",
-            "conv2.2.running_var",
+            "bn2.weight",
+            "bn2.bias",
+            "bn2.running_mean",
+            "bn2.running_var",
         ],
     ]
 
@@ -44,8 +44,8 @@ def generate_json_bin_param(dtype="Q4.12"):
         fusion_K = weight / torch.sqrt(var + EPSILON)
         fusion_B = bias - weight * mean / torch.sqrt(var + EPSILON)
 
-        new_param[f"conv{i+1}.2.fusion_K"] = fusion_K
-        new_param[f"conv{i+1}.2.fusion_B"] = fusion_B
+        new_param[f"bn{i+1}.fusion_K"] = fusion_K
+        new_param[f"bn{i+1}.fusion_B"] = fusion_B
 
     fixed_point_bin_param = {}
 
