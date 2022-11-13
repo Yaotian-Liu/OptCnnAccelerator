@@ -1,0 +1,9 @@
+\subsection{Test Platform}
+
+The test platform is constructed in cocotb. This Python package provides a friendly interface for interacting with the signals of out dut, while unleashing Python's potential for data analysis. 
+
+Before initializing the dut, we first construct feature maps and weights as the testcase. This is generated through numpy's rand function, from which a matrix of randomized elements can be easily created. We further use the convolution function from Homework 1 to calculate the real result of our testcase.
+
+The timing sequence of the input requires extreme discretion. First, we supply the dut with a forked clock stimulus and wait some cyles before pulling down the reset signal, initiating the circuit. We extract a part of the feature map which the dut would handle, padding it if necessary. Then we extract the data from it, and drive the ports as described in \ref{BUF2PE}. When the computation is complete, we must save the accumulated result and reset the circuit to avoid contamination to the next cycle. While designing the inner logic of BUF2PE to ensure the correctness of data flow is indeed no easy job ,aligning the counters, activation and weight input is a true nightmare. 
+
+The obtained result is around, but not precisely equal to the result from what we obtained from the function. We conjecture this is due to a loss of precision, as while the function computes the result in floating point arithmatics, the circuit use fix-point arithmatics whose multiplication involves shifting and rounding.

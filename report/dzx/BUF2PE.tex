@@ -1,4 +1,4 @@
-\subsection{BUF2PE}
+\subsection{BUF2PE}\label{BUF2PE}
 
 BUF2PE is where the convolution computation is done, thus the cardinal module in the whole design. 
 
@@ -10,6 +10,13 @@ Its design is actually simple and elegant. A MAC unit MAC$yx$ is responsible for
     \includegraphics[width=0.8\columnwidth]{figures/act.png}
     \caption{BUF2PE and the mapping between activation data and PE}
 \end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\columnwidth]{figures/task.png}
+    \caption{The current region of output pixels to be produced(in red), the loaded data in buffer(in black), and the next region to be computed(in green)}
+\end{figure}
+
 
 We define \textit{Pox} as a compound of multiple \textit{MACs} which calculates the output pixels in the same row, and \textit{Poy} as a compound of multiple \textit{Pox}. So within the \textit{Pox}, each \textit{MAC} and its neighbour are using neighbouring pixels in the same row of the input map. Hence for one \textit{MAC}, its stream of input can be constructed from that of other \textit{MACs} by offsetting the time cycles. Similarly within the \textit{Poy} the neighbouring \textit{Poxes} are using neighbouring rows. This observation is crucial because it gives us a insight on how the data reuse can be done.
 
