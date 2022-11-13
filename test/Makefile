@@ -4,8 +4,8 @@
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 
-VERILOG_SOURCES += $(PWD)/../rtl/TopLevel.v
-VERILOG_SOURCES += $(PWD)/../rtl/TopLevel_bb.v
+VERILOG_SOURCES += $(PWD)/../BUF2PE/rtl/TopLevel.v
+VERILOG_SOURCES += $(PWD)/../BUF2PE/rtl/TopLevel_bb.v
 # use VHDL_SOURCES for VHDL files
 
 # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file

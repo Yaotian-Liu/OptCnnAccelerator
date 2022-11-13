@@ -2,10 +2,10 @@
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
 [*] Sun Nov 13 05:47:07 2022
 [*]
-[dumpfile] "/home/dzx-dzx/OptCnnAccelerator/BUF2PE/test/wave.vcd"
+[dumpfile] "/home/dzx-dzx/OptCnnAccelerator/test/wave.vcd"
 [dumpfile_mtime] "Sun Nov 13 05:38:35 2022"
 [dumpfile_size] 548266
-[savefile] "/home/dzx-dzx/OptCnnAccelerator/BUF2PE/test/a.gtkw"
+[savefile] "/home/dzx-dzx/OptCnnAccelerator/test/a.gtkw"
 [timestart] 0
 [size] 2548 1359
 [pos] 32767 32767
