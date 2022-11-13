@@ -10,11 +10,11 @@ import json
 from fxpmath import Fxp
 import torch
 
-import debugpy
+# import debugpy
 
-debugpy.listen(4000)
-print("Waiting for debugger attach")
-debugpy.wait_for_client()
+# debugpy.listen(4000)
+# print("Waiting for debugger attach")
+# debugpy.wait_for_client()
 
 
 @cocotb.test()
@@ -57,23 +57,21 @@ async def test(dut):
             ]
         )
 
-    def converter(listOrNumber):
-        return (
-            map(converter, listOrNumber)
-            if type(listOrNumber) == "<class 'list'>"
-            else Fxp(listOrNumber, dtype=Qtype).bin()
-        )
-    print(converter(fmap.tolist()))
     with open(f"a.json", "w") as f:
         f.write(
             json.dumps(
                 {
-                    "fmap": converter(fmap.tolist()),
+                    "fmap": fmap.tolist(),
                     "wmap": wmap.tolist(),
                     "conv": conv2d(fmap, wmap).tolist(),
                 }
             )
         )
+
+    with open(f"b.log", "w") as f:
+        f.write(str(Fxp(fmap.tolist(), dtype=Qtype).hex()))
+        f.write(str(Fxp(wmap.tolist(), dtype=Qtype).hex()))
+        f.write(str(Fxp(conv2d(fmap, wmap).tolist(), dtype=Qtype).hex()))
 
     dut._id("io_poyInput_master_en", extended=False).value = 1
     for i in range(poy):
