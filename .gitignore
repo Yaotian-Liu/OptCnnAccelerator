@@ -314,3 +314,9 @@ TSWLatexianTemp*
 *.glstex
 
 # End of https://www.toptal.com/developers/gitignore/api/latex
+
+# Cocotb 
+/test/results.xml
+/test/sim_build
+/test/__pycache__
+/test/*.vcd
