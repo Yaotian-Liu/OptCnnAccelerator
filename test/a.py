@@ -10,11 +10,11 @@ import json
 from fxpmath import Fxp
 import torch
 
-import debugpy
+# import debugpy
 
-debugpy.listen(4000)
-print("Waiting for debugger attach")
-debugpy.wait_for_client()
+# debugpy.listen(4000)
+# print("Waiting for debugger attach")
+# debugpy.wait_for_client()
 
 
 @cocotb.test()
@@ -32,7 +32,7 @@ async def test(dut):
     kernel_size = 5
     CHANNEL_N = 4
 
-    Qtype = "Q4.12"
+    Qtype = "Q5.11"
 
     # i_f = 6
     # size = 14
@@ -43,8 +43,8 @@ async def test(dut):
     o_f = 4
     out_size = size - kernel_size + 1
 
-    fmap = np.random.rand(i_f, size, size)
-    wmap = np.random.rand(o_f, i_f, kernel_size, kernel_size)
+    fmap = np.random.randn(i_f, size, size) / 10
+    wmap = np.random.randn(o_f, i_f, kernel_size, kernel_size) / 10
 
     def conv2d(fmap, filters):
         return np.array(
@@ -57,20 +57,31 @@ async def test(dut):
             ]
         )
 
-    def converter(listOrNumber):
-        return (
-            map(converter, listOrNumber)
-            if type(listOrNumber) == "<class 'list'>"
-            else Fxp(listOrNumber, dtype=Qtype).bin()
-        )
-    print(converter(fmap.tolist()))
+    def converter(a):
+        bin_list = []
+        for e in np.nditer(a):
+            x = Fxp(e, dtype=Qtype)
+            bin_list.append(x.hex())
+        return np.array(bin_list).reshape(a.shape).tolist()
+
     with open(f"a.json", "w") as f:
         f.write(
             json.dumps(
                 {
-                    "fmap": converter(fmap.tolist()),
+                    "fmap": fmap.tolist(),
                     "wmap": wmap.tolist(),
                     "conv": conv2d(fmap, wmap).tolist(),
+                }
+            )
+        )
+
+    with open(f"b.json", "w") as f:
+        f.write(
+            json.dumps(
+                {
+                    "fmap": converter(fmap),
+                    "wmap": converter(wmap),
+                    "conv": converter(conv2d(fmap, wmap)),
                 }
             )
         )
