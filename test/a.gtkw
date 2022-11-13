@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Sun Nov 13 09:41:57 2022
+[*] Sun Nov 13 10:08:41 2022
 [*]
 [dumpfile] "/home/dzx-dzx/OptCnnAccelerator/test/wave.vcd"
-[dumpfile_mtime] "Sun Nov 13 09:41:42 2022"
-[dumpfile_size] 2289411
+[dumpfile_mtime] "Sun Nov 13 09:59:19 2022"
+[dumpfile_size] 2181233
 [savefile] "/home/dzx-dzx/OptCnnAccelerator/test/a.gtkw"
-[timestart] 6200
-[size] 1278 1360
-[pos] -1 -1
-*-15.000000 80400 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[timestart] 0
+[size] 2560 1369
+[pos] -1282 -9
+*-15.000000 160900 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TopLevel.
 [treeopen] TopLevel.conv_0.
 [treeopen] TopLevel.conv_0.areaWithReset_pox_array_0.
@@ -19,10 +19,10 @@
 [treeopen] TopLevel.conv_0.areaWithReset_pox_array_1.
 [treeopen] TopLevel.conv_0.areaWithReset_pox_array_1.pe_array_1.
 [treeopen] TopLevel.conv_0.areaWithReset_pox_array_1.pe_array_2.
-[sst_width] 239
+[sst_width] 331
 [signals_width] 390
 [sst_expanded] 1
-[sst_vpaned_height] 420
+[sst_vpaned_height] 423
 @22
 TopLevel.conv_0.areaWithReset_pox_array_0.pe_array_0.mac_64.io_activation[15:0]
 TopLevel.conv_0.areaWithReset_pox_array_0.pe_array_0.mac_64.io_weight[15:0]
@@ -65,5 +65,12 @@ TopLevel.io_poyInput_activation_buffer_3_1[15:0]
 TopLevel.io_poyInput_activation_buffer_3_2[15:0]
 TopLevel.io_poyInput_activation_buffer_3_3[15:0]
 TopLevel.io_poyInput_activation_buffer_standby_3[15:0]
+TopLevel.conv_0.areaWithReset_pox_array_0.pe_array_0.mac_64.accumulator[15:0]
+@201
+-
+@28
+TopLevel.column_counter_value[2:0]
+TopLevel.row_counter_value[2:0]
+TopLevel.input_channel_counter_value[1:0]
 [pattern_trace] 1
 [pattern_trace] 0
