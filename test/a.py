@@ -43,8 +43,8 @@ async def test(dut):
     o_f = 4
     out_size = size - kernel_size + 1
 
-    fmap = np.random.rand(i_f, size, size)
-    wmap = np.random.rand(o_f, i_f, kernel_size, kernel_size)
+    fmap = np.random.randn(i_f, size, size) / 10
+    wmap = np.random.randn(o_f, i_f, kernel_size, kernel_size) / 10
 
     def conv2d(fmap, filters):
         return np.array(
@@ -56,6 +56,7 @@ async def test(dut):
                 for filter in filters
             ]
         )
+
     def converter(a):
         bin_list = []
         for e in np.nditer(a):
