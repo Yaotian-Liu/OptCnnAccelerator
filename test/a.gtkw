@@ -1,20 +1,40 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Sun Nov 13 05:47:07 2022
+[*] Sun Nov 13 09:41:57 2022
 [*]
 [dumpfile] "/home/dzx-dzx/OptCnnAccelerator/test/wave.vcd"
-[dumpfile_mtime] "Sun Nov 13 05:38:35 2022"
-[dumpfile_size] 548266
+[dumpfile_mtime] "Sun Nov 13 09:41:42 2022"
+[dumpfile_size] 2289411
 [savefile] "/home/dzx-dzx/OptCnnAccelerator/test/a.gtkw"
-[timestart] 0
-[size] 2548 1359
-[pos] 32767 32767
-*-14.000000 30000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[timestart] 6200
+[size] 1278 1360
+[pos] -1 -1
+*-15.000000 80400 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TopLevel.
-[sst_width] 380
+[treeopen] TopLevel.conv_0.
+[treeopen] TopLevel.conv_0.areaWithReset_pox_array_0.
+[treeopen] TopLevel.conv_0.areaWithReset_pox_array_0.pe_array_0.
+[treeopen] TopLevel.conv_0.areaWithReset_pox_array_0.pe_array_1.
+[treeopen] TopLevel.conv_0.areaWithReset_pox_array_0.pe_array_2.
+[treeopen] TopLevel.conv_0.areaWithReset_pox_array_1.
+[treeopen] TopLevel.conv_0.areaWithReset_pox_array_1.pe_array_1.
+[treeopen] TopLevel.conv_0.areaWithReset_pox_array_1.pe_array_2.
+[sst_width] 239
 [signals_width] 390
 [sst_expanded] 1
-[sst_vpaned_height] 419
+[sst_vpaned_height] 420
+@22
+TopLevel.conv_0.areaWithReset_pox_array_0.pe_array_0.mac_64.io_activation[15:0]
+TopLevel.conv_0.areaWithReset_pox_array_0.pe_array_0.mac_64.io_weight[15:0]
+TopLevel.conv_0.areaWithReset_pox_array_0.pe_array_0.mac_64.accumulator[15:0]
+@200
+-
+@22
+TopLevel.conv_0.areaWithReset_pox_array_1.pe_array_2.mac_64.io_activation[15:0]
+TopLevel.conv_0.areaWithReset_pox_array_1.pe_array_2.mac_64.io_weight[15:0]
+TopLevel.conv_0.areaWithReset_pox_array_1.pe_array_2.mac_64.accumulator[15:0]
+@200
+-
 @22
 TopLevel.io_poyInput_activation_buffer_0_0[15:0]
 TopLevel.io_poyInput_activation_buffer_0_1[15:0]
@@ -45,10 +65,5 @@ TopLevel.io_poyInput_activation_buffer_3_1[15:0]
 TopLevel.io_poyInput_activation_buffer_3_2[15:0]
 TopLevel.io_poyInput_activation_buffer_3_3[15:0]
 TopLevel.io_poyInput_activation_buffer_standby_3[15:0]
-@200
--
-@28
-TopLevel.clk
-TopLevel.reset
 [pattern_trace] 1
 [pattern_trace] 0

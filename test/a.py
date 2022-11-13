@@ -32,7 +32,7 @@ async def test(dut):
     kernel_size = 5
     CHANNEL_N = 4
 
-    Qtype = "Q4.12"
+    Qtype = "Q5.11"
 
     # i_f = 6
     # size = 14
@@ -56,6 +56,12 @@ async def test(dut):
                 for filter in filters
             ]
         )
+    def converter(a):
+        bin_list = []
+        for e in np.nditer(a):
+            x = Fxp(e, dtype=Qtype)
+            bin_list.append(x.hex())
+        return np.array(bin_list).reshape(a.shape).tolist()
 
     with open(f"a.json", "w") as f:
         f.write(
@@ -68,10 +74,16 @@ async def test(dut):
             )
         )
 
-    with open(f"b.log", "w") as f:
-        f.write(str(Fxp(fmap.tolist(), dtype=Qtype).hex()))
-        f.write(str(Fxp(wmap.tolist(), dtype=Qtype).hex()))
-        f.write(str(Fxp(conv2d(fmap, wmap).tolist(), dtype=Qtype).hex()))
+    with open(f"b.json", "w") as f:
+        f.write(
+            json.dumps(
+                {
+                    "fmap": converter(fmap),
+                    "wmap": converter(wmap),
+                    "conv": converter(conv2d(fmap, wmap)),
+                }
+            )
+        )
 
     dut._id("io_poyInput_master_en", extended=False).value = 1
     for i in range(poy):
